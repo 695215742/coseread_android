@@ -20,8 +20,7 @@ Scene* MainScene::createScene()
 // on "init" you need to initialize your instance
 bool MainScene::init()
 {
-    //////////////////////////////
-    // 1. super init first
+
     if ( !CCLayerColor::initWithColor(ccc4(255, 255, 255, 255) ))
     {
         return false;
@@ -30,60 +29,54 @@ bool MainScene::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
+    //left menu with four buttons and a label (reading,search,setting,list&system information)
     auto BookItem = MenuItemImage::create(
                                            "reading_btn.png",
-                                           "CloseSelected.png",
+                                           "reading_btn_pu.png",
                                            CC_CALLBACK_1(MainScene::menuCloseCallback, this));
     
 	BookItem->setPosition(Vec2(origin.x +BookItem->getContentSize().width/2,
 		origin.y +visibleSize.height- BookItem->getContentSize().height/2));
 	auto ListItem = MenuItemImage::create(
                                            "list_btn.png",
-                                           "CloseSelected.png",
+                                           "list_btn_pu.png",
                                            CC_CALLBACK_1(MainScene::menuStartCallback, this));
     
 	ListItem->setPosition(Vec2(origin.x +BookItem->getContentSize().width/2 ,
 		origin.y +visibleSize.height- 3*BookItem->getContentSize().height/2));
 	auto SearchItem = MenuItemImage::create(
                                            "search_btn.png",
-                                           "CloseSelected.png",
+                                           "search_btn_pu.png",
                                            CC_CALLBACK_1(MainScene::menuStartCallback, this));
     
 	SearchItem->setPosition(Vec2(origin.x +BookItem->getContentSize().width/2 ,
 		origin.y +visibleSize.height- 5*BookItem->getContentSize().height/2));
- 
+	auto SettingItem = MenuItemImage::create(
+                                           "setting_btn.png",
+                                           "setting_btn_pu.png",
+                                           CC_CALLBACK_1(MainScene::menuStartCallback, this));
+    
+	SettingItem->setPosition(Vec2(origin.x +BookItem->getContentSize().width/2 ,
+		origin.y +visibleSize.height- 7*BookItem->getContentSize().height/2));
     // create menu, it's an autorelease object
-	auto menu = Menu::create(BookItem, ListItem,SearchItem,NULL);
+	auto menu = Menu::create(BookItem, ListItem,SearchItem,SettingItem,NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
 
-    /////////////////////////////
-    // 3. add your codes below...
+	//four layers,control by tuttons
+	CCLayerGradient* layer1 = CCLayerGradient::create(ccc4(255, 0, 0, 255), ccc4(255, 0, 255, 255));
+	layer1->setContentSize(CCSizeMake(80, 80));
+	layer1->setPosition(ccp(50,50));
+	
 
-    // add a label shows "Hello World"
-    // create and initialize a label
-    
-    auto label = LabelTTF::create("Hello World", "Arial", 24);
-    
-    // position the label on the center of the screen
-    label->setPosition(Vec2(origin.x + visibleSize.width,
-                            origin.y + visibleSize.height - label->getContentSize().height));
-    // add the label as a child to this layer
-    this->addChild(label, 1);
-
-    // add "MainScene" splash screen"
     MainScene::isprite = Sprite::create("title.png");
 
     // position the sprite on the center of the screen
     MainScene::isprite->setPosition(Vec2(visibleSize.width/2 + origin.x, 2*visibleSize.height/3 + origin.y));
     // add the sprite as a child to this layer
     //this->addChild(MainScene::isprite, 0);
-    
+	layer1->addChild(isprite);
+    addChild(layer1);
     return true;
 }
 
@@ -101,9 +94,23 @@ void MainScene::menuCloseCallback(Ref* pSender)
     exit(0);
 #endif
 }
-void MainScene::menuStartCallback(Ref* pSender)
+void MainScene::menuReadingCallback(Ref* pSender)
 {
 	 RotateBy * titlerote = RotateBy::create (1, 180);
 	 MainScene::isprite->runAction(titlerote);
-
+}
+void MainScene::menuSearchCallback(Ref* pSender)
+{
+	 RotateBy * titlerote = RotateBy::create (1, 180);
+	 MainScene::isprite->runAction(titlerote);
+}
+void MainScene::menuListCallback(Ref* pSender)
+{
+	 RotateBy * titlerote = RotateBy::create (1, 180);
+	 MainScene::isprite->runAction(titlerote);
+}
+void MainScene::menuSettingCallback(Ref* pSender)
+{
+	 RotateBy * titlerote = RotateBy::create (1, 180);
+	 MainScene::isprite->runAction(titlerote);
 }

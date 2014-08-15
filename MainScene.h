@@ -14,7 +14,10 @@ public:
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
-    void menuStartCallback(cocos2d::Ref* pSender);
+    void menuReadingCallback(cocos2d::Ref* pSender);
+	void menuListCallback(cocos2d::Ref* pSender);
+	void menuSearchCallback(cocos2d::Ref* pSender);
+	void menuSettingCallback(cocos2d::Ref* pSender);
     // implement the "static create()" method manually
     CREATE_FUNC(MainScene);
 private:

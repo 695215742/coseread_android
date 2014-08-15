@@ -20,8 +20,6 @@ Scene* HelloWorld::createScene()
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-    //////////////////////////////
-    // 1. super init first
     if ( !CCLayerColor::initWithColor(ccc4(255, 255, 255, 255) ))
     {
         return false;
@@ -30,11 +28,7 @@ bool HelloWorld::init()
     Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
+	//start button & close button
     auto closeItem = MenuItemImage::create(
                                            "CloseNormal.png",
                                            "CloseSelected.png",
@@ -44,33 +38,18 @@ bool HelloWorld::init()
                                 origin.y + closeItem->getContentSize().height/2));
 	auto StartItem = MenuItemImage::create(
                                            "title_btn.png",
-                                           "CloseSelected.png",
+                                           "title_btn_pu.png",
                                            CC_CALLBACK_1(HelloWorld::menuStartCallback, this));
     
 	StartItem->setPosition(Vec2(origin.x + visibleSize.width/2 ,
                                 origin.y + visibleSize.height/4+StartItem->getContentSize().height/2));
  
-    // create menu, it's an autorelease object
+    // add buttons to menu
 	auto menu = Menu::create(closeItem, StartItem,NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
 
-    /////////////////////////////
-    // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
-    
-    auto label = LabelTTF::create("Hello World", "Arial", 24);
-    
-    // position the label on the center of the screen
-    label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height - label->getContentSize().height));
-
-    // add the label as a child to this layer
-    this->addChild(label, 1);
-
-    // add "HelloWorld" splash screen"
+	//central title
     HelloWorld::isprite = Sprite::create("title.png");
 
     // position the sprite on the center of the screen
@@ -97,9 +76,11 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 }
 void HelloWorld::menuStartCallback(Ref* pSender)
 {
-	 RotateBy * titlerote = RotateBy::create (1, 180);
-	 HelloWorld::isprite->runAction(titlerote);
-	 CCScene * scene1=MainScene::createScene();
-	 CCTransitionScene * ss=CCTransitionProgressInOut::create(1,scene1);
-	 CCDirector::sharedDirector()->replaceScene(ss);
+	//central sprite action 
+	RotateBy * titlerote = RotateBy::create (1, 180);
+	HelloWorld::isprite->runAction(titlerote);
+	//scene transite
+	CCScene * scene1=MainScene::createScene();
+	CCTransitionScene * ss=CCTransitionProgressInOut::create(1,scene1);
+	CCDirector::sharedDirector()->replaceScene(ss);
 }
