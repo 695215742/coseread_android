@@ -22,6 +22,7 @@ public:
     CREATE_FUNC(MainScene);
 private:
 	cocos2d::Sprite * isprite;
+	//cocos2d::Layer 
 };
 
 #endif // __HELLOWORLD_SCENE_H__

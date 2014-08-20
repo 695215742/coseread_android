@@ -33,28 +33,28 @@ bool MainScene::init()
     auto BookItem = MenuItemImage::create(
                                            "reading_btn.png",
                                            "reading_btn_pu.png",
-                                           CC_CALLBACK_1(MainScene::menuCloseCallback, this));
+                                           CC_CALLBACK_1(MainScene::menuReadingCallback, this));
     
 	BookItem->setPosition(Vec2(origin.x +BookItem->getContentSize().width/2,
 		origin.y +visibleSize.height- BookItem->getContentSize().height/2));
 	auto ListItem = MenuItemImage::create(
                                            "list_btn.png",
                                            "list_btn_pu.png",
-                                           CC_CALLBACK_1(MainScene::menuStartCallback, this));
+                                           CC_CALLBACK_1(MainScene::menuListCallback, this));
     
 	ListItem->setPosition(Vec2(origin.x +BookItem->getContentSize().width/2 ,
 		origin.y +visibleSize.height- 3*BookItem->getContentSize().height/2));
 	auto SearchItem = MenuItemImage::create(
                                            "search_btn.png",
                                            "search_btn_pu.png",
-                                           CC_CALLBACK_1(MainScene::menuStartCallback, this));
+                                           CC_CALLBACK_1(MainScene::menuSearchCallback, this));
     
 	SearchItem->setPosition(Vec2(origin.x +BookItem->getContentSize().width/2 ,
 		origin.y +visibleSize.height- 5*BookItem->getContentSize().height/2));
 	auto SettingItem = MenuItemImage::create(
                                            "setting_btn.png",
                                            "setting_btn_pu.png",
-                                           CC_CALLBACK_1(MainScene::menuStartCallback, this));
+                                           CC_CALLBACK_1(MainScene::menuSettingCallback, this));
     
 	SettingItem->setPosition(Vec2(origin.x +BookItem->getContentSize().width/2 ,
 		origin.y +visibleSize.height- 7*BookItem->getContentSize().height/2));
