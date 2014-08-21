@@ -22,7 +22,7 @@ public:
     CREATE_FUNC(MainScene);
 private:
 	cocos2d::Sprite * isprite;
-	//cocos2d::Layer 
+	cocos2d::CCLayerGradient* searchlayer;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

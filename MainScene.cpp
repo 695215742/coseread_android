@@ -63,20 +63,13 @@ bool MainScene::init()
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
 
-	//four layers,control by tuttons
-	CCLayerGradient* layer1 = CCLayerGradient::create(ccc4(255, 0, 0, 255), ccc4(255, 0, 255, 255));
-	layer1->setContentSize(CCSizeMake(80, 80));
-	layer1->setPosition(ccp(50,50));
-	
-
     MainScene::isprite = Sprite::create("title.png");
 
     // position the sprite on the center of the screen
     MainScene::isprite->setPosition(Vec2(visibleSize.width/2 + origin.x, 2*visibleSize.height/3 + origin.y));
     // add the sprite as a child to this layer
     //this->addChild(MainScene::isprite, 0);
-	layer1->addChild(isprite);
-    addChild(layer1);
+    
     return true;
 }
 
@@ -101,13 +94,31 @@ void MainScene::menuReadingCallback(Ref* pSender)
 }
 void MainScene::menuSearchCallback(Ref* pSender)
 {
-	 RotateBy * titlerote = RotateBy::create (1, 180);
-	 MainScene::isprite->runAction(titlerote);
+	//get size
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	//four layers,control by tuttons
+	//search layer
+	MainScene::searchlayer = CCLayerGradient::create(ccc4(0, 0, 0, 255), ccc4(0, 0, 0, 255));
+	MainScene::searchlayer->setContentSize(CCSizeMake(300, 300));
+	MainScene::searchlayer->setPosition(ccp(100,50));
+	//searchlayer content
+	auto SettingItem = MenuItemImage::create(
+                                           "setting_btn.png",
+                                           "setting_btn_pu.png",
+                                           CC_CALLBACK_1(MainScene::menuSettingCallback, this));
+    
+	SettingItem->setPosition(Vec2(origin.x +100 ,
+		origin.y +visibleSize.height- 100));
+    // create menu, it's an autorelease object
+	auto menu = Menu::create(SettingItem,NULL);
+    menu->setPosition(Vec2::ZERO);
+	searchlayer->addChild(menu, 1);
+	addChild(searchlayer);
 }
 void MainScene::menuListCallback(Ref* pSender)
 {
-	 RotateBy * titlerote = RotateBy::create (1, 180);
-	 MainScene::isprite->runAction(titlerote);
+	searchlayer->removeAllComponents();
 }
 void MainScene::menuSettingCallback(Ref* pSender)
 {
