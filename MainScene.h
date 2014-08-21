@@ -23,6 +23,11 @@ public:
 private:
 	cocos2d::Sprite * isprite;
 	cocos2d::CCLayerGradient* searchlayer;
+	cocos2d::CCLayerGradient* settinglayer;
+	cocos2d::CCLayerGradient* readinglayer;
+	cocos2d::CCLayerGradient* listlayer;
+	//state 1:reading,2:list,3:search,4:setting
+	int state;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

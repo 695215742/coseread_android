@@ -89,17 +89,64 @@ void MainScene::menuCloseCallback(Ref* pSender)
 }
 void MainScene::menuReadingCallback(Ref* pSender)
 {
-	 RotateBy * titlerote = RotateBy::create (1, 180);
-	 MainScene::isprite->runAction(titlerote);
-}
-void MainScene::menuSearchCallback(Ref* pSender)
-{
+	//get original state and change it 
+	int oristate = MainScene::state;
+	MainScene::state = 1; 
+	//state 1:reading,2:list,3:search,4:setting
+	if(oristate == 1)
+	{
+		readinglayer->removeAllChildrenWithCleanup(true);
+	}
+	else if(oristate == 2)
+	{
+		listlayer->removeAllChildrenWithCleanup(true);
+	}
+	else if(oristate == 3)
+	{
+		searchlayer->removeAllChildrenWithCleanup(true);
+	}
+	else if(oristate == 4)
+	{
+		settinglayer->removeAllChildrenWithCleanup(true);
+	}
 	//get size
 	Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	//four layers,control by tuttons
 	//search layer
-	MainScene::searchlayer = CCLayerGradient::create(ccc4(0, 0, 0, 255), ccc4(0, 0, 0, 255));
+	MainScene::readinglayer = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255, 255, 255));
+	MainScene::readinglayer->setContentSize(CCSizeMake(300, 300));
+	MainScene::readinglayer->setPosition(ccp(100,50));
+	addChild(readinglayer);
+}
+void MainScene::menuSearchCallback(Ref* pSender)
+{
+	//get original state and change it 
+	int oristate = MainScene::state;
+	MainScene::state = 3; 
+	//state 1:reading,2:list,3:search,4:setting
+	if(oristate == 1)
+	{
+		readinglayer->removeAllChildrenWithCleanup(true);
+	}
+	else if(oristate == 2)
+	{
+		listlayer->removeAllChildrenWithCleanup(true);
+	}
+	else if(oristate == 3)
+	{
+		searchlayer->removeAllChildrenWithCleanup(true);
+	}
+	else if(oristate == 4)
+	{
+		settinglayer->removeAllChildrenWithCleanup(true);
+	}
+	//get size
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	//four layers,control by tuttons
+	//search layer
+	MainScene::searchlayer = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255, 255, 255));
 	MainScene::searchlayer->setContentSize(CCSizeMake(300, 300));
 	MainScene::searchlayer->setPosition(ccp(100,50));
 	//searchlayer content
@@ -118,10 +165,65 @@ void MainScene::menuSearchCallback(Ref* pSender)
 }
 void MainScene::menuListCallback(Ref* pSender)
 {
-	searchlayer->removeAllComponents();
+	//get original state and change it 
+	int oristate = MainScene::state;
+	MainScene::state = 2; 
+	//state 1:reading,2:list,3:search,4:setting
+	if(oristate == 1)
+	{
+		readinglayer->removeAllChildrenWithCleanup(true);
+	}
+	else if(oristate == 2)
+	{
+		listlayer->removeAllChildrenWithCleanup(true);
+	}
+	else if(oristate == 3)
+	{
+		searchlayer->removeAllChildrenWithCleanup(true);
+	}
+	else if(oristate == 4)
+	{
+		settinglayer->removeAllChildrenWithCleanup(true);
+	}
+	//get size
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	//four layers,control by tuttons
+	//search layer
+	MainScene::listlayer = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255, 255, 255));
+	MainScene::listlayer->setContentSize(CCSizeMake(300, 300));
+	MainScene::listlayer->setPosition(ccp(100,50));
+	addChild(listlayer);
 }
 void MainScene::menuSettingCallback(Ref* pSender)
 {
-	 RotateBy * titlerote = RotateBy::create (1, 180);
-	 MainScene::isprite->runAction(titlerote);
+	//get original state and change it 
+	int oristate = MainScene::state;
+	MainScene::state = 4; 
+	//state 1:reading,2:list,3:search,4:setting
+	if(oristate == 1)
+	{
+		readinglayer->removeAllChildrenWithCleanup(true);
+	}
+	else if(oristate == 2)
+	{
+		listlayer->removeAllChildrenWithCleanup(true);
+	}
+	else if(oristate == 3)
+	{
+		searchlayer->removeAllChildrenWithCleanup(true);
+	}
+	else if(oristate == 4)
+	{
+		settinglayer->removeAllChildrenWithCleanup(true);
+	}
+	//get size
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	//four layers,control by tuttons
+	//search layer
+	MainScene::settinglayer = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255, 255, 255));
+	MainScene::settinglayer->setContentSize(CCSizeMake(300, 300));
+	MainScene::settinglayer->setPosition(ccp(100,50));
+	addChild(settinglayer);
 }
