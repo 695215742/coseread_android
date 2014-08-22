@@ -1,5 +1,6 @@
 #include "MainScene.h"
 #include "ui\UITextField.h"
+#include "network/HttpClient.h"
 USING_NS_CC;
 
 Scene* MainScene::createScene()
@@ -70,6 +71,15 @@ bool MainScene::init()
     // add the sprite as a child to this layer
     //this->addChild(MainScene::isprite, 0);
     
+	//http client
+	cocos2d::network::HttpRequest* request = new cocos2d::network::HttpRequest();
+	request->setUrl("http://www.baidu.com");
+	request->setRequestType(cocos2d::network::HttpRequest::Type::GET);
+	//request->setResponseCallback(CC_CALLBACK_2(HelloWorld::onHttpRequestCompleted,this));
+	request->setTag("GET test");
+	cocos2d::network::HttpClient::getInstance()->send(request);
+	request->release();
+
     return true;
 }
 
@@ -86,6 +96,10 @@ void MainScene::menuCloseCallback(Ref* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
 #endif
+}
+void MainScene::menuNULLCallback(Ref* pSender)
+{
+
 }
 void MainScene::menuReadingCallback(Ref* pSender)
 {
@@ -141,26 +155,36 @@ void MainScene::menuSearchCallback(Ref* pSender)
 	{
 		settinglayer->removeAllChildrenWithCleanup(true);
 	}
+
+	MainScene::searchlayer = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255, 255, 255));
+	MainScene::searchlayer->setContentSize(CCSizeMake(300, 300));
+	MainScene::searchlayer->setPosition(ccp(100,50));
 	//get size
 	Size visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	//four layers,control by tuttons
 	//search layer
-	MainScene::searchlayer = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255, 255, 255));
-	MainScene::searchlayer->setContentSize(CCSizeMake(300, 300));
-	MainScene::searchlayer->setPosition(ccp(100,50));
-	//searchlayer content
-	auto SettingItem = MenuItemImage::create(
-                                           "setting_btn.png",
-                                           "setting_btn_pu.png",
+	cocos2d::ui::TextField* textField = cocos2d::ui::TextField::create();
+    textField->setTouchEnabled(true);
+    //textField->setFontName(font_UITextFieldTest);
+    textField->setFontSize(40);
+	textField->setColor(ccc3(46, 117, 182));
+    textField->setPlaceHolder("input words here");
+    textField->setPosition(Point(visibleSize.width *2/5, visibleSize.height / 2));
+    searchlayer->addChild(textField);
+
+	auto SearchLayerItem = MenuItemImage::create(
+                                           "search_layer_btn.png",
+                                           "search_layer_btn_pu.png",
                                            CC_CALLBACK_1(MainScene::menuSettingCallback, this));
     
-	SettingItem->setPosition(Vec2(origin.x +100 ,
-		origin.y +visibleSize.height- 100));
+	SearchLayerItem->setPosition(Vec2(origin.x+visibleSize.width*4/5,
+		origin.y +visibleSize.height/2));
     // create menu, it's an autorelease object
-	auto menu = Menu::create(SettingItem,NULL);
+	auto menu = Menu::create(SearchLayerItem,NULL);
     menu->setPosition(Vec2::ZERO);
 	searchlayer->addChild(menu, 1);
+
 	addChild(searchlayer);
 }
 void MainScene::menuListCallback(Ref* pSender)
@@ -193,6 +217,7 @@ void MainScene::menuListCallback(Ref* pSender)
 	MainScene::listlayer = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255, 255, 255));
 	MainScene::listlayer->setContentSize(CCSizeMake(300, 300));
 	MainScene::listlayer->setPosition(ccp(100,50));
+
 	addChild(listlayer);
 }
 void MainScene::menuSettingCallback(Ref* pSender)
@@ -227,26 +252,34 @@ void MainScene::menuSettingCallback(Ref* pSender)
 	MainScene::settinglayer->setPosition(ccp(100,50));
 
 	//add textarea
-	cocos2d::ui::TextField* textField = cocos2d::ui::TextField::create();
-    textField->setTouchEnabled(true);
-    //textField->setFontName(font_UITextFieldTest);
-    textField->setFontSize(30);
-	textField->setColor(ccc3(255, 200, 255));
-    textField->setPlaceHolder("input words here");
-    textField->setPosition(Point(visibleSize.width / 2.0f, visibleSize.height / 2.0f));
-    settinglayer->addChild(textField);
-
-	auto SettingItem = MenuItemImage::create(
-                                           "setting_btn.png",
-                                           "setting_btn_pu.png",
-                                           CC_CALLBACK_1(MainScene::menuSettingCallback, this));
-    
-	SettingItem->setPosition(Vec2(origin.x +100 ,
-		origin.y +visibleSize.height- 100));
+	auto VoiceItem = MenuItemImage::create(
+                                           "voice_btn.png",
+                                           "voice_btn_pu.png",
+										   CC_CALLBACK_1(MainScene::menuCloseCallback, this));
+	VoiceItem->setPosition(Vec2(origin.x+visibleSize.width/2,
+		origin.y +visibleSize.height/4*3));
+	auto AboutItem = MenuItemImage::create(
+                                           "about_btn.png",
+                                           "about_btn_pu.png",
+										   CC_CALLBACK_1(MainScene::menuCloseCallback, this));
+	AboutItem->setPosition(Vec2(origin.x+visibleSize.width/2,
+		origin.y +visibleSize.height/4*2));
+	auto QuitItem = MenuItemImage::create(
+                                           "close_btn.png",
+                                           "qclose_btn_pu.png",
+										   CC_CALLBACK_1(MainScene::menuCloseCallback, this));
+	QuitItem->setPosition(Vec2(origin.x+visibleSize.width/2,
+		origin.y +visibleSize.height/4));
     // create menu, it's an autorelease object
-	auto menu = Menu::create(SettingItem,NULL);
+	auto menu = Menu::create(VoiceItem,AboutItem,QuitItem,NULL);
     menu->setPosition(Vec2::ZERO);
 	settinglayer->addChild(menu, 1);
 
 	addChild(settinglayer);
+}
+void MainScene::SearchBookCallback(Ref* pSender)
+{
+	//central sprite action 
+	RotateBy * titlerote = RotateBy::create (1, 180);
+	//scene transite
 }

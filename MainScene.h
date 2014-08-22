@@ -18,6 +18,8 @@ public:
 	void menuListCallback(cocos2d::Ref* pSender);
 	void menuSearchCallback(cocos2d::Ref* pSender);
 	void menuSettingCallback(cocos2d::Ref* pSender);
+	void menuNULLCallback(cocos2d::Ref* pSender);
+	void SearchBookCallback(cocos2d::Ref* pSender);
     // implement the "static create()" method manually
     CREATE_FUNC(MainScene);
 private:
