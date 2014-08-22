@@ -1,5 +1,5 @@
 #include "MainScene.h"
-
+#include "ui\UITextField.h"
 USING_NS_CC;
 
 Scene* MainScene::createScene()
@@ -225,5 +225,28 @@ void MainScene::menuSettingCallback(Ref* pSender)
 	MainScene::settinglayer = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255, 255, 255));
 	MainScene::settinglayer->setContentSize(CCSizeMake(300, 300));
 	MainScene::settinglayer->setPosition(ccp(100,50));
+
+	//add textarea
+	cocos2d::ui::TextField* textField = cocos2d::ui::TextField::create();
+    textField->setTouchEnabled(true);
+    //textField->setFontName(font_UITextFieldTest);
+    textField->setFontSize(30);
+	textField->setColor(ccc3(255, 200, 255));
+    textField->setPlaceHolder("input words here");
+    textField->setPosition(Point(visibleSize.width / 2.0f, visibleSize.height / 2.0f));
+    settinglayer->addChild(textField);
+
+	auto SettingItem = MenuItemImage::create(
+                                           "setting_btn.png",
+                                           "setting_btn_pu.png",
+                                           CC_CALLBACK_1(MainScene::menuSettingCallback, this));
+    
+	SettingItem->setPosition(Vec2(origin.x +100 ,
+		origin.y +visibleSize.height- 100));
+    // create menu, it's an autorelease object
+	auto menu = Menu::create(SettingItem,NULL);
+    menu->setPosition(Vec2::ZERO);
+	settinglayer->addChild(menu, 1);
+
 	addChild(settinglayer);
 }
