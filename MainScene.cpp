@@ -73,7 +73,7 @@ bool MainScene::init()
     
 	//http client
 	cocos2d::network::HttpRequest* request = new cocos2d::network::HttpRequest();
-	request->setUrl("http://www.baidu.com");
+	request->setUrl("http://www.coseread.herokuapp.com");
 	request->setRequestType(cocos2d::network::HttpRequest::Type::GET);
 	//request->setResponseCallback(CC_CALLBACK_2(HelloWorld::onHttpRequestCompleted,this));
 	request->setTag("GET test");
@@ -131,6 +131,25 @@ void MainScene::menuReadingCallback(Ref* pSender)
 	MainScene::readinglayer = CCLayerGradient::create(ccc4(255, 255, 255, 255), ccc4(255, 255, 255, 255));
 	MainScene::readinglayer->setContentSize(CCSizeMake(300, 300));
 	MainScene::readinglayer->setPosition(ccp(100,50));
+
+	//add photo's menu
+	auto PhotoItem = MenuItemImage::create(
+                                           "photo_btn.png",
+                                           "photo_btn.png",
+                                           CC_CALLBACK_1(MainScene::menuNULLCallback, this));
+    
+	PhotoItem->setPosition(Vec2(origin.x+visibleSize.width/6,
+		origin.y +visibleSize.height/4*3));
+    // create menu, it's an autorelease object
+	auto menu = Menu::create(PhotoItem,NULL);
+    menu->setPosition(Vec2::ZERO);
+	readinglayer->addChild(menu, 1);
+
+	cocos2d::Label *username = Label::create("tourist","Î¢ÈíÑÅºÚ",30);
+	username->setColor(ccc3(46, 117, 182));
+	username->setPosition(Vec2(origin.x+visibleSize.width/6,
+		origin.y +visibleSize.height/4*3-PhotoItem->getContentSize().height));
+	readinglayer->addChild(username);
 	addChild(readinglayer);
 }
 void MainScene::menuSearchCallback(Ref* pSender)
@@ -166,11 +185,11 @@ void MainScene::menuSearchCallback(Ref* pSender)
 	//search layer
 	cocos2d::ui::TextField* textField = cocos2d::ui::TextField::create();
     textField->setTouchEnabled(true);
-    //textField->setFontName(font_UITextFieldTest);
+	textField->setFontName("Î¢ÈíÑÅºÚ");
     textField->setFontSize(40);
 	textField->setColor(ccc3(46, 117, 182));
     textField->setPlaceHolder("input words here");
-    textField->setPosition(Point(visibleSize.width *2/5, visibleSize.height / 2));
+    textField->setPosition(Point(visibleSize.width *2/5, visibleSize.height / 4*3));
     searchlayer->addChild(textField);
 
 	auto SearchLayerItem = MenuItemImage::create(
@@ -179,7 +198,7 @@ void MainScene::menuSearchCallback(Ref* pSender)
                                            CC_CALLBACK_1(MainScene::menuSettingCallback, this));
     
 	SearchLayerItem->setPosition(Vec2(origin.x+visibleSize.width*4/5,
-		origin.y +visibleSize.height/2));
+		origin.y +visibleSize.height/4*3));
     // create menu, it's an autorelease object
 	auto menu = Menu::create(SearchLayerItem,NULL);
     menu->setPosition(Vec2::ZERO);
@@ -251,27 +270,44 @@ void MainScene::menuSettingCallback(Ref* pSender)
 	MainScene::settinglayer->setContentSize(CCSizeMake(300, 300));
 	MainScene::settinglayer->setPosition(ccp(100,50));
 
+	cocos2d::ui::TextField* username_txt = cocos2d::ui::TextField::create();
+    username_txt->setTouchEnabled(true);
+	username_txt->setFontName("Î¢ÈíÑÅºÚ");
+    username_txt->setFontSize(40);
+	username_txt->setColor(ccc3(46, 117, 182));
+    username_txt->setPlaceHolder("input your username here");
+    username_txt->setPosition(Point(visibleSize.width /2, visibleSize.height / 4*3));
+    settinglayer->addChild(username_txt);
+
+	cocos2d::ui::TextField* password_txt = cocos2d::ui::TextField::create();
+    password_txt->setTouchEnabled(true);
+	password_txt->setFontName("Î¢ÈíÑÅºÚ");
+    password_txt->setFontSize(40);
+	password_txt->setColor(ccc3(46, 117, 182));
+    password_txt->setPlaceHolder("input your password here");
+    password_txt->setPosition(Point(visibleSize.width /2, visibleSize.height / 4*2));
+    settinglayer->addChild(password_txt);
 	//add textarea
 	auto VoiceItem = MenuItemImage::create(
                                            "voice_btn.png",
                                            "voice_btn_pu.png",
 										   CC_CALLBACK_1(MainScene::menuCloseCallback, this));
 	VoiceItem->setPosition(Vec2(origin.x+visibleSize.width/2,
-		origin.y +visibleSize.height/4*3));
-	auto AboutItem = MenuItemImage::create(
-                                           "about_btn.png",
-                                           "about_btn_pu.png",
+		origin.y +visibleSize.height/6*4));
+	auto SigninItem = MenuItemImage::create(
+                                           "sign_in_btn.png",
+                                           "sign_in_btn.png",
 										   CC_CALLBACK_1(MainScene::menuCloseCallback, this));
-	AboutItem->setPosition(Vec2(origin.x+visibleSize.width/2,
-		origin.y +visibleSize.height/4*2));
+	SigninItem->setPosition(Vec2(origin.x+visibleSize.width/3*2,
+		origin.y +visibleSize.height/6*2));
 	auto QuitItem = MenuItemImage::create(
                                            "close_btn.png",
                                            "qclose_btn_pu.png",
 										   CC_CALLBACK_1(MainScene::menuCloseCallback, this));
-	QuitItem->setPosition(Vec2(origin.x+visibleSize.width/2,
-		origin.y +visibleSize.height/4));
+	QuitItem->setPosition(Vec2(origin.x+visibleSize.width/3,
+		origin.y +visibleSize.height/6*2));
     // create menu, it's an autorelease object
-	auto menu = Menu::create(VoiceItem,AboutItem,QuitItem,NULL);
+	auto menu = Menu::create(SigninItem,QuitItem,NULL);
     menu->setPosition(Vec2::ZERO);
 	settinglayer->addChild(menu, 1);
 
